@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, inital-scale=1.0"/>
+	<title>getraenkewart.de - Homepage der Rover DPSG Stamm Kohlscheid I</title>
+	<link rel = "stylesheet" type  = "text/css" href = "{% static 'css/style.css' %}" />
+	<link rel = "stylesheet" type  = "text/css" href = "{% static 'css/bootstrap.min.css' %}" />
+	<link rel="shortcut icon" type = "image/svg+xml" href = "{% static 'images/dpsg_lilie.svg'%}"/>
+	{% block head %}
+	{% endblock %}
+</head>
+<body>
+	<h3 align = "center">
+	<img src="{% static "images/rover.svg" %}" width = "10%" align = "top" alt = "Rover Logo"/>
+	getraenkewart.de - Homepage der Rover DPSG Stamm Kohlscheid I 
+	</h3>
+	{% block content %}
+	{% endblock %}
+</body>
+</html>
