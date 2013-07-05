@@ -1,3 +1,4 @@
 database/
 __pycache__/
 *.swp
+getrankewart/settings.py
