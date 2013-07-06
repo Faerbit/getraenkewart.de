@@ -1,1 +1,7 @@
+body{
+	background-color: darkred
+}
 
+img.no-resize {
+	max-height:14px;
+}
