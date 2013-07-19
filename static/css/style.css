@@ -5,3 +5,7 @@ body{
 img.no-resize {
 	max-height:14px;
 }
+
+.navbar-inner {
+    background-image: darkred;
+}
