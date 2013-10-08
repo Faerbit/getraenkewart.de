@@ -16,6 +16,7 @@
 <body>
 	<nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
+			<a class="navbar-brand" href="/"><img src="{% static "images/rover.svg" %}" height="14" alt = "Rover Logo"/> getraenkewart.de</a>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -23,7 +24,6 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-			<a class="navbar-brand" href="/"><img class ="no-resize" src="{% static "images/rover.svg" %}" height="14" alt = "Rover Logo"/> getraenkewart.de</a>
             <div class="navbar-collapse collapse">
 			    <ul class="nav navbar-nav">
 				    <li class="active"><a href="/">Start</a></li>
@@ -32,17 +32,18 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <div class="container" style="width: 300px;">
-                            <form action="{% url 'login' %}" method="post" accept-charset="utf-8">
+                            <div class="container" style="min-width: 200px;">
+                            <form action="{% url 'login' %}" method="post" accept-charset="utf-8" role="form">
                             {% csrf_token %}
+                                <div class="col">
                                 <div class="form-group">
                                     <input id="user_username" type="text" placeholder="Benutzername" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <input id="user_password" type="password" placeholder="Passwort" class="form-control"/> 
-                                </div>
-                                <button class="btn btn-primary" style="float:right;" type="submit" >Login</button>
-
+                                    <input id="user_password" type="password" placeholder="Passwort" class="form-control"/>
+                            </div>
+                            <button class="btn btn-primary" style="float:right;" type="submit" >Login</button></div>
+                            </form>
                             </div>
                         </ul> 
                     </li>
