@@ -29,6 +29,7 @@
 				    <li class="active"><a href="/">Start</a></li>
 			    </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if name == "" %}
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -37,24 +38,39 @@
                             {% csrf_token %}
                                 <div class="col">
                                 <div class="form-group">
-                                    <input id="user_username" type="text" placeholder="Benutzername" class="form-control"/>
+                                    <input id="user_username" name="username" type="text" placeholder="Benutzername" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <input id="user_password" type="password" placeholder="Passwort" class="form-control"/>
+                                    <input id="user_password" name="password" type="password" placeholder="Passwort" class="form-control"/>
                             </div>
                             <button class="btn btn-primary" style="float:right;" type="submit" >Login</button></div>
                             </form>
                             </div>
                         </ul> 
                     </li>
+                    {% else %}
+
+                    <ul class="nav navbar-nav">
+                        <li><a>Hallo {{ name }}!</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
 	</nav>
+    {% if alert_type != "" %}
+    <div class="container">
+	    <div class="alert alert-{{alert_type}} alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{alert_message}}
+        </div>
+    </div>
+    {% endif %}
 	{% block content %}
 	{% endblock %}
     <footer>
-        <p align="center">&copy; Fabian Klemp 2013</p>
+        <p style="text-align: center;">&copy; Fabian Klemp 2013</p>
     </footer>
 </body>
 </html>
