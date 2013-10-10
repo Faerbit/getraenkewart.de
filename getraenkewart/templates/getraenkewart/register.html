@@ -1,0 +1,42 @@
+{% extends "getraenkewart/base.html" %}
+
+{% block content %}
+<h2 style="text-align:center;" >Neuen Benutzer registrieren</h2>
+<form action="{% url 'register' %}" method="post" accept-charset="utf-8" role="form">
+{% csrf_token %}
+    <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            {% if first_name_error %}
+            <div class="form-group has-error col-md-6">
+            {% else %}
+            <div class="form-group col-md-6">
+            {% endif%}
+                <label for="first_name">Vorname</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Vorname" value="{{first_name}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="last_name">Nachname</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nachname" value="{{last_name}}">
+            </div>
+        </div>
+        {% if username_error %}
+        <div class="form-group has-error">
+        {% else %}
+        <div class="form-group">
+        {% endif %}
+            <label for="username">Benutzername</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Benutzername" value="{{username}}">
+        </div>
+        {% if password_error %}
+        <div class="form-group has-error">
+        {% else %}
+        <div class="form-group">
+        {% endif %}
+            <label for="password">Passwort</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Passwort" value="{{password}}">
+        </div>
+        <button class="btn btn-primary" style="float:right;" type="submit">Registrieren</button>
+</div></div>
+</form>
+{% endblock %}
