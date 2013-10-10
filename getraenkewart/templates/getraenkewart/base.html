@@ -26,7 +26,7 @@
             </div>
             <div class="navbar-collapse collapse">
 			    <ul class="nav navbar-nav">
-				    <li class="active"><a href="/">Start</a></li>
+                    <li class="active"><a href="{% url 'index' %}">Start</a></li>
 			    </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if name == "" %}
@@ -34,25 +34,25 @@
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <div class="container" style="min-width: 200px;">
-                            <form action="{% url 'login' %}" method="post" accept-charset="utf-8" role="form">
-                            {% csrf_token %}
-                                <div class="col">
-                                <div class="form-group">
-                                    <input id="user_username" name="username" type="text" placeholder="Benutzername" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <input id="user_password" name="password" type="password" placeholder="Passwort" class="form-control"/>
-                            </div>
-                            <button class="btn btn-primary" style="float:right;" type="submit" >Login</button></div>
-                            </form>
+                                <form action="{% url 'login' %}" method="post" accept-charset="utf-8" role="form">
+                                    {% csrf_token %}
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <input id="username" name="username" type="text" placeholder="Benutzername" class="form-control"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="password" name="password" type="password" placeholder="Passwort" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" style="float:right;" type="submit" >Login</button>
+                                </form>
+                                <a style="float:left; margin-top:6px; margin-left:5px;" href="{% url 'register' %}">Registrieren</a>
                             </div>
                         </ul> 
                     </li>
                     {% else %}
                     <ul class="nav navbar-nav">
-                        <li><a>Hallo {{ name }}!</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
+                        <p class="navbar-text">Hallo {{ name }}!</p>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                     {% endif %}
@@ -61,17 +61,16 @@
         </div>
 	</nav>
     {% if alert_type != "" %}
-    <div class="container">
-	    <div class="alert alert-{{alert_type}} alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{alert_message}}
-        </div>
+	<div class="alert alert-{{alert_type}} alert-dismissable container">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p style="text-align:center;">{{alert_message}}</p>
     </div>
     {% endif %}
 	{% block content %}
 	{% endblock %}
+    <hr>
     <footer>
-        <p style="text-align: center;">&copy; Fabian Klemp 2013</p>
+        <p style="text-align:center">&copy; Fabian Klemp 2013</p>
     </footer>
 </body>
 </html>
