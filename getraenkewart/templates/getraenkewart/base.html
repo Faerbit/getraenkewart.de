@@ -49,11 +49,12 @@
                         </ul> 
                     </li>
                     {% else %}
-
                     <ul class="nav navbar-nav">
                         <li><a>Hallo {{ name }}!</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
                         <li><a href="{% url 'logout' %}">Logout</a></li>
-                    </li>
+                    </ul>
                     {% endif %}
                 </ul>
             </div>

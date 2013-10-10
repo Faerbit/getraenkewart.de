@@ -6,13 +6,13 @@ def index(request):
     context = dict(list({'chart':generate_bier_chart(2013)}.items()) + list(standard_checks(request).items()))
     return render (request, "getraenkewart/index.html", context)
 
-def login(request):
+def login_view(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate (username=username, password=password)
     if user is not None:
         if user.is_active:
-            login(user)
+            login(request, user)
             context = standard_checks(request, "success", "Erfolgreich eingeloggt!")
             return render (request, "getraenkewart/index.html", context)
         else:
@@ -22,7 +22,7 @@ def login(request):
         context = standard_checks(request, "danger", "Dein Passwort oder dein Benutzername ist falsch.")
         return render (request, "getraenkewart/index.html", context)
 
-def logout(request):
+def logout_view(request):
     logout(request)
     context = standard_checks(request, "success", "Erfolgreich ausgeloggt!")
     return render(request, "getraenkewart/index.html", context)
