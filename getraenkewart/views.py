@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from getraenke.views import generate_bier_chart
+#from getraenke.views import generate_bier_chart
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 def index(request):
-    context = dict(list({'chart':generate_bier_chart(2013)}.items()) + list(standard_checks(request).items()))
+    #context = dict(list({'chart':generate_bier_chart(2013)}.items()) + list(standard_checks(request).items()))
+    context = standard_checks(request, "start")
     return render (request, "getraenkewart/index.html", context)
 
 def login_view(request):
@@ -14,23 +15,23 @@ def login_view(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            context = standard_checks(request, "success", "Erfolgreich eingeloggt!")
+            context = standard_checks(request, "start",  "success", "Erfolgreich eingeloggt!")
             return render (request, "getraenkewart/index.html", context)
         else:
-            context = standard_checks(request, "danger", "Du bist noch nicht aktiviert! Frag mal nach.")
+            context = standard_checks(request, "start", "danger", "Du bist noch nicht aktiviert! Frag mal nach.")
             return render (request, "getraenkewart/index.html", context)
     else:
-        context = standard_checks(request, "danger", "Dein Passwort oder dein Benutzername ist falsch.")
+        context = standard_checks(request, "start", "danger", "Dein Passwort oder dein Benutzername ist falsch.")
         return render (request, "getraenkewart/index.html", context)
 
 def logout_view(request):
     logout(request)
-    context = standard_checks(request, "success", "Erfolgreich ausgeloggt!")
+    context = standard_checks(request, "start", "success", "Erfolgreich ausgeloggt!")
     return render(request, "getraenkewart/index.html", context)
 
 def register(request):
     if request.method =="GET":
-        context = standard_checks(request)
+        context = standard_checks(request, "start")
         return render(request, "getraenkewart/register.html", context)
     else:
         first_name = request.POST['first_name']
@@ -41,17 +42,17 @@ def register(request):
         for i in User.objects.all():
             if i.username==username:
                 context = dict({'username_error':True})
-                context.update(standard_checks(request, "danger", "Dieser Benutzername ist bereits vergeben!"))
+                context.update(standard_checks(request, "start", "danger", "Dieser Benutzername ist bereits vergeben!"))
                 context.update(data)
                 return render(request, "getraenkewart/register.html", context)
         if first_name=="":
             context = dict({'first_name_error':True})
-            context.update(standard_checks(request, "danger", "Bitte gib einen Vornamen ein."))
+            context.update(standard_checks(request, "start", "danger", "Bitte gib einen Vornamen ein."))
             context.update(data)
             return render(request, "getraenkewart/register.html", context)
         if len(password) < 8:
             context = dict({'password_error':True})
-            context.update(standard_checks(request, "danger", "Das Passwort muss mindestens 8 Zeichen lang sein."))
+            context.update(standard_checks(request, "start", "danger", "Das Passwort muss mindestens 8 Zeichen lang sein."))
             context.update(data)
             return render(request, "getraenkewart/register.html", context)
         user = User.objects.create_user(username, "", password)
@@ -59,15 +60,15 @@ def register(request):
         user.last_name = last_name
         user.is_active = False
         user.save()
-        context = standard_checks(request, "success", "Neuen Benutzer erfolgreich angelegt. Bitte warte auf deine Aktivierung.")
+        context = standard_checks(request, "start", "success", "Neuen Benutzer erfolgreich angelegt. Bitte warte auf deine Aktivierung.")
         return render(request, "getraenkewart/index.html", context)
 
-def standard_checks(request, alert_type="", alert_message=""):
+def standard_checks(request, active_nav, alert_type="", alert_message=""):
     if request.user.is_authenticated():
         name = request.user.first_name
     else:
         name = ""
     if alert_type == "":
-        return {'name':name, 'alert_type':"", 'alert_message':""}
+        return {'name':name, 'active_nav':active_nav, 'alert_type':"", 'alert_message':""}
     else:
-        return {'name':name, 'alert_type':alert_type, 'alert_message':alert_message}
+        return {'name':name, 'active_nav':active_nav, 'alert_type':alert_type, 'alert_message':alert_message}

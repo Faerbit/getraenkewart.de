@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from getraenke.models import Person, Jahr, Monat
+from  getraenkewart.views import standard_checks
 from datetime import date
 
 def generate_bier_chart (year):
@@ -29,3 +30,8 @@ def generate_bier_chart (year):
 			'charttdata': chartdata
 			}
 	return data
+
+def highscore(request):
+    context = standard_checks(request, "getraenke")
+    return render (request, "getraenke/highscore.html", context)
+
