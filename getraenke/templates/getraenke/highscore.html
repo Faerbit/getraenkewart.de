@@ -1,1 +1,31 @@
 {% extends "getraenkewart/base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">Highscore</h2>
+
+<div class="container">
+    <ul class="pager">
+        <li><a href="{%url 'highscore'%}{{year_previous}}">&laquo;</a></li>
+        <li style="font-size:20px;">{{year}}</li>
+        <li><a href="{%url 'highscore'%}{{year_next}}">&raquo;</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <th>Name</th><th>Gesamt</th><th>Januar</th><th>Februar</th><th>März</th><th>April</th><th>Mai</th><th>Juni</th>
+            <th>Juli</th><th>August</th><th>September</th><th>Oktober</th><th>November</th><th>Dezember</th>
+            <tr>
+            {% for i in personen %}
+                {% for j in i %}
+                <td>{{j}}</td>
+                {% endfor %}
+                <tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
