@@ -31,7 +31,37 @@ def generate_bier_chart (year):
 			}
 	return data
 
-def highscore(request):
-    context = standard_checks(request, "getraenke")
+def highscore(request, year=None):
+    if year == None:
+        year = date.today().year
+    year = int(year)
+    context = {'year':year, 'year_previous':year-1, 'year_next':year+1}
+    empty = False
+    personen = dict()
+    count = 0
+    for i in Person.objects.all():  #TODO: change to direct query with year and handle exception also figure the table template out
+        j = i.jahre.get(jahr=year)
+        if not j == None:
+            count += 1
+            jan = j.januar.bierstriche
+            feb = j.februar.bierstriche
+            mar = j.maerz.bierstriche
+            apr = j.april.bierstriche
+            mai = j.mai.bierstriche
+            jun = j.juni.bierstriche
+            jul = j.juli.bierstriche
+            aug = j.august.bierstriche
+            sep = j.september.bierstriche
+            okt = j.oktober.bierstriche
+            nov = j.november.bierstriche
+            dez = j.dezember.bierstriche
+            summe = jan + feb + mar + apr + mai + jun + jul + aug + sep + okt + nov + dez
+            personen.update({('pers' + str(count)):{'name':i.name, 'sum':summe, 'jan':jan, 'feb':feb, 'mar':mar, 'apr':apr, 'mai':mai, 'jun':jun, 'jul':jul,
+                'aug':aug, 'sep':sep, 'okt':okt, 'nov':nov, 'dez':dez}})
+    if not empty:
+        context.update({'personen':personen})
+    else:
+        context.update({'empty':True})
+    context.update(standard_checks(request, "getraenke"))
     return render (request, "getraenke/highscore.html", context)
 
