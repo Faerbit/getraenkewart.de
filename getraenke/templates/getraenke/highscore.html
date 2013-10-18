@@ -11,12 +11,14 @@
         <li><a href="{%url 'highscore'%}{{year_next}}">&raquo;</a></li>
     </ul>
 </div>
-
+{% if not empty %}
 <div class="container">
     <div class="table-responsive">
         <table class="table table-hover">
-            <th>Name</th><th>Gesamt</th><th>Januar</th><th>Februar</th><th>März</th><th>April</th><th>Mai</th><th>Juni</th>
-            <th>Juli</th><th>August</th><th>September</th><th>Oktober</th><th>November</th><th>Dezember</th>
+            <th style="width: 7%;">Name</th><th style="width: 7%;">Gesamt</th><th style="width: 7%;">Januar</th><th style="width: 7%;">Februar</th><th style="width: 7%;">März</th>
+            <th style="width: 7%;">April</th><th style="width: 7%;">Mai</th><th style="width: 7%;">Juni</th>
+            <th style="width: 7%;">Juli</th><th style="width: 7%;">August</th><th style="width: 7%;">September</th><th style="width: 7%;">Oktober</th>
+            <th style="width: 7%;">November</th><th style="width: 7%;">Dezember</th>
             <tr>
             {% for i in personen %}
                 {% for j in i %}
@@ -27,5 +29,9 @@
         </table>
     </div>
 </div>
+
+{% else %}
+<div style="text-align:center;">Für dieses Jahr sind leider keine Daten vorhanden.</div>
+{% endif%}
 
 {% endblock %}
