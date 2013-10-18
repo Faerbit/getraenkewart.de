@@ -2,6 +2,7 @@ from django.shortcuts import render
 from getraenke.models import Person, Jahr, Monat
 from  getraenkewart.views import standard_checks
 from datetime import date
+#import pdb
 
 def generate_bier_chart (year):
 	#xdata = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
@@ -37,12 +38,10 @@ def highscore(request, year=None):
     year = int(year)
     context = {'year':year, 'year_previous':year-1, 'year_next':year+1}
     empty = False
-    personen = dict()
-    count = 0
+    personen = []
     for i in Person.objects.all():  #TODO: change to direct query with year and handle exception also figure the table template out
         j = i.jahre.get(jahr=year)
         if not j == None:
-            count += 1
             jan = j.januar.bierstriche
             feb = j.februar.bierstriche
             mar = j.maerz.bierstriche
@@ -56,8 +55,7 @@ def highscore(request, year=None):
             nov = j.november.bierstriche
             dez = j.dezember.bierstriche
             summe = jan + feb + mar + apr + mai + jun + jul + aug + sep + okt + nov + dez
-            personen.update({('pers' + str(count)):{'name':i.name, 'sum':summe, 'jan':jan, 'feb':feb, 'mar':mar, 'apr':apr, 'mai':mai, 'jun':jun, 'jul':jul,
-                'aug':aug, 'sep':sep, 'okt':okt, 'nov':nov, 'dez':dez}})
+            personen.append([i.name, summe, jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, dez])
     if not empty:
         context.update({'personen':personen})
     else:

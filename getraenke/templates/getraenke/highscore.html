@@ -19,7 +19,7 @@
             <th>Juli</th><th>August</th><th>September</th><th>Oktober</th><th>November</th><th>Dezember</th>
             <tr>
             {% for i in personen %}
-                {% for j in i.items() %}
+                {% for j in i %}
                 <td>{{j}}</td>
                 {% endfor %}
                 <tr>
