@@ -30,7 +30,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    message.success(request, "Erfolgreich ausgeloggt!")
+    messages.success(request, "Erfolgreich ausgeloggt!")
     context = standard_checks(request, "start")
     return render(request, "getraenkewart/index.html", context)
 
