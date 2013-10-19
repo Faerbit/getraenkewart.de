@@ -93,4 +93,7 @@ def standard_checks(request, active_nav):
         name = request.user.first_name
     else:
         name = ""
-    return {'name':name, 'active_nav':active_nav}
+    if request.user.is_staff:
+        return {'name':name, 'is_staff':True, 'active_nav':active_nav}
+    else:
+        return {'name':name, 'is_staff':False, 'active_nav':active_nav}

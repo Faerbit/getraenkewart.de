@@ -1,0 +1,33 @@
+{% extends "getraenkewart/base.html" %}
+{% block content %}
+
+<h2 style="text-align:center;">Verwalten</h2>
+
+<div class="container">
+    <ul class="pager">
+        <li><a href="{%url 'manage'%}{{year_previous}}/{{month}}">&laquo;</a></li>
+        <li style="font-size:20px;">{{year}}</li>
+        <li><a href="{%url 'manage'%}{{year_next}}/{{month}}">&raquo;</a></li>
+    </ul>
+    <ul class="pager">
+        <li><a href="{%url 'manage'%}{{year}}/{{month_previous}}">&laquo;</a></li>
+        <li style="font-size:20px;">{{month}}</li>
+        <li><a href="{%url 'manage'%}{{year}}/{{month_next}}">&raquo;</a></li>
+    </ul>
+</div>
+
+<form class="form-horizontal" role="form">
+    <div class="container">
+        <table class="table table-hover">
+            <th style="width:25%;">Name</th><th style="width:25%;">Bierstriche</th>
+            <th style="width:25%;">Colastriche</th><th style="width:25%;">Bezahlt (in €)</th>
+            <tr>
+                <td><div class="form-group"> <button class="btn btn-danger">&times;</button> <p class="form-control-static">asdf</p></div></td>
+                <td><div class="form-group row"><input class="form-control col-md-1" id="previous" type="text" placeholder="25" disabled> 
+                        <p class="form-control-static">+</p></div> </td>
+            <tr>
+        </table>
+    </div>
+</form>
+                                    
+{% endblock %}
