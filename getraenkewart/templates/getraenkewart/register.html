@@ -15,7 +15,11 @@
                     <label for="first_name">Vorname</label>
                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Vorname" value="{{first_name}}">
                 </div>
+                {% if last_name_error %}
+                <div class="form-group has-error col-md-6">
+                {% else %}
                 <div class="form-group col-md-6">
+                {% endif %}
                     <label for="last_name">Nachname</label>
                     <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nachname" value="{{last_name}}">
                 </div>
