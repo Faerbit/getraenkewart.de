@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from getraenke.models import Person, Jahr, Monat
 from  getraenkewart.views import standard_checks
 from datetime import date
+from django.contrib import messages
 #import pdb
 
 def generate_bier_chart (year):
@@ -33,6 +34,9 @@ def generate_bier_chart (year):
 	return data
 
 def highscore(request, year=None):
+    if not request.user.is_authenticated():
+        messages.error(request, "Du musst dich erst einloggen.")
+        return redirect("/")
     if year == None:
         year = date.today().year
     year = int(year)
