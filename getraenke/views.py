@@ -68,3 +68,26 @@ def highscore(request, year=None):
     context.update(standard_checks(request, "getraenke"))
     return render (request, "getraenke/highscore.html", context)
 
+def manage(request, year=None, month=None):
+    if not request.user.is_authenticated():
+        messages.error(request, "Du musst dich erst einloggen.")
+        return redirect("/")
+    elif not request.user.is_staff:
+        messages.error(request, "Zugriff verweigert!")
+        return redirect("/")
+    if year == None:
+        year = date.today().year
+    year = int(year)
+    context = {'year':year, 'year_previous':year-1, 'year_next':year+1}
+    if month == None:
+        month = date.today().month
+    month = int(month)
+    context.update({'month':month})
+    if month == 1:
+        context.update({'month_previous':12, 'month_next':2})
+    elif month == 12:
+        context.update({'month_previous':11, 'month_next':1})
+    else:
+        context.update({'month_previous':month-1, 'month_next':month+1})
+    context.update(standard_checks(request, "verwalten"))
+    return render (request, "getraenke/manage.html", context)

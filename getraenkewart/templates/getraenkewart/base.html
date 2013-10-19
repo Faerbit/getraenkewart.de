@@ -27,11 +27,21 @@
             <div class="navbar-collapse collapse">
 			    <ul class="nav navbar-nav">
                     {% if active_nav == "start" %}
-                    <li class="active"><a href="{% url 'index' %}">Start</a></li>
-                    <li><a href="{% url 'highscore'%}">Getränke</a></li>
+                        <li class="active"><a href="{% url 'index' %}">Start</a></li>
+                        <li><a href="{% url 'highscore'%}">Getränke</a></li>
                     {% elif active_nav == "getraenke" %}
-                    <li><a href="{% url 'index' %}">Start</a></li>
-                    <li class="active"><a href="{% url 'highscore'%}">Getränke</a></li>
+                        <li><a href="{% url 'index' %}">Start</a></li>
+                        <li class="active"><a href="{% url 'highscore'%}">Getränke</a></li>
+                    {% elif active_nav == "verwalten" %}
+                        <li><a href="{% url 'index' %}">Start</a></li>
+                        <li><a href="{% url 'highscore'%}">Getränke</a></li>
+                    {% endif %}
+                    {% if is_staff %}
+                        {% if active_nav == "verwalten" %}
+                            <li class="active"> <a href="{% url 'manage' %}">Verwalten</a></li>
+                        {% else %}
+                            <li> <a href="{% url 'manage' %}">Verwalten</a></li>
+                        {% endif %}
                     {% endif %}
 			    </ul>
                 <ul class="nav navbar-nav navbar-right">
