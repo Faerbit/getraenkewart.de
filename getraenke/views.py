@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from getraenke.models import Person, Jahr, Monat
 from  getraenkewart.views import standard_checks
 from datetime import date
@@ -39,7 +39,7 @@ def highscore(request, year=None):
     context = {'year':year, 'year_previous':year-1, 'year_next':year+1}
     personen = []
     empty = True
-    for i in Person.objects.filter(jahre__jahr__exact=year):  #TODO: change to direct query with year and handle exception also figure the table template out
+    for i in Person.objects.filter(jahre__jahr__exact=year):
         empty = False
         j = i.jahre.get(jahr=year)
         jan = j.januar.bierstriche
