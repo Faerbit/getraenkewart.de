@@ -22,12 +22,50 @@
             <th style="width:25%;">Name</th><th style="width:25%;">Bierstriche</th>
             <th style="width:25%;">Colastriche</th><th style="width:25%;">Bezahlt (in €)</th>
             <tr>
-                <td><div class="form-group"> <button class="btn btn-danger">&times;</button> <p class="form-control-static">asdf</p></div></td>
-                <td><div class="form-group row"><input class="form-control col-md-1" id="previous" type="text" placeholder="25" disabled> 
-                        <p class="form-control-static">+</p></div> </td>
+                <!--td><div class="row"> <div class="col-md-2"><button class="btn btn-danger">&times;</button></div> 
+                    <p class="form-control-static col-md-10">asdf</p></div></td>
+                <td><div class="row">
+                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="25" disable></div>
+                    <div class="col-md-1"><p class="form-control-static">+</p></div>
+                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="0"></div>
+                    <div class="col-md-1"><p class="form-control-static">=</p></div>
+                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="25" disable></div>
+                </td-->
+            <tr>
+                <td><div class="row"> <div class="col-md-2"><button class="btn btn-danger">&times;</button></div> 
+                    <p class="form-control-static col-md-10">asdf</p></div></td>
+                <td><div class="row">
+                    <div class="col-md-1"><p id ="summand1" class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p class="form-control-static">+</p></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="summunad2" type="text" placeholder="0" disable></div>
+                    <div class="col-md-1"><p class="form-control-static">=</p></div>
+                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
+                </td>
+                <td><div class="row">
+                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p class="form-control-static">+</p></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="previous" type="text" placeholder="0" disable></div>
+                    <div class="col-md-1"><p class="form-control-static">=</p></div>
+                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                </td>
+                <td><div class="row">
+                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p class="form-control-static">+</p></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="previous" type="text" placeholder="0" disable></div>
+                    <div class="col-md-1"><p class="form-control-static">=</p></div>
+                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                </td>
             <tr>
         </table>
     </div>
 </form>
+
+<script type="text/javascript">
+    $('summand2').bind('input', function(){
+            //var asdf = $("p[id='summand1'").val();
+            var asdf = document.getElementById("summand1").value
+            alert(asdf);
+            }
+</script>
                                     
 {% endblock %}
