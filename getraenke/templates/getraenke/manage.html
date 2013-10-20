@@ -37,7 +37,7 @@
                 <td><div class="row">
                     <div class="col-md-1"><p id ="summand1" class="form-control-static">25</p></div>
                     <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="summunad2" type="text" placeholder="0" disable></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="summand2" type="text" placeholder="0" disable></div>
                     <div class="col-md-1"><p class="form-control-static">=</p></div>
                     <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
                 </td>
@@ -61,11 +61,12 @@
 </form>
 
 <script type="text/javascript">
-    $('summand2').bind('input', function(){
-            //var asdf = $("p[id='summand1'").val();
-            var asdf = document.getElementById("summand1").value
-            alert(asdf);
-            }
+    $('#summand2').on('input', function(){
+            var summe = parseInt($('#summand1').text()) + parseInt($('#summand2').val())
+            if (isNaN(summe))
+                summe = $('#summand1').text()
+            $("#summe").text(summe);
+            });
 </script>
                                     
 {% endblock %}
