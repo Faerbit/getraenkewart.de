@@ -1,6 +1,9 @@
 {% extends "getraenkewart/base.html" %}
 {% block content %}
 
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'getraenke/js/application.js' %}"></script>
+
 <h2 style="text-align:center;">Verwalten</h2>
 
 <div class="container">
@@ -19,54 +22,41 @@
 <form class="form-horizontal" role="form">
     <div class="container">
         <table class="table table-hover">
+            <tr>
             <th style="width:25%;">Name</th><th style="width:25%;">Bierstriche</th>
             <th style="width:25%;">Colastriche</th><th style="width:25%;">Bezahlt (in €)</th>
-            <tr>
-                <!--td><div class="row"> <div class="col-md-2"><button class="btn btn-danger">&times;</button></div> 
-                    <p class="form-control-static col-md-10">asdf</p></div></td>
-                <td><div class="row">
-                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="25" disable></div>
-                    <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="0"></div>
-                    <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-3"><input class="form-control" id="previous" type="text" placeholder="25" disable></div>
-                </td-->
+            </tr>
             <tr>
                 <td><div class="row"> <div class="col-md-2"><button class="btn btn-danger">&times;</button></div> 
-                    <p class="form-control-static col-md-10">asdf</p></div></td>
+                    <p class="form-control-static col-md-10">asdf</p></div>
+                </td>
                 <td><div class="row">
-                    <div class="col-md-1"><p id ="summand1" class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
                     <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="summand2" type="text" placeholder="0" disable></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
                     <div class="col-md-1"><p class="form-control-static">=</p></div>
                     <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
                 </td>
                 <td><div class="row">
-                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
                     <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="previous" type="text" placeholder="0" disable></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
                     <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
                 </td>
                 <td><div class="row">
-                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
                     <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" id="previous" type="text" placeholder="0" disable></div>
+                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
                     <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-1"><p class="form-control-static">25</p></div>
+                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
                 </td>
-            <tr>
+            </tr>
         </table>
+        <div class="col-md-1 col-md-offset-5">
+            <button type="button" id="add-button" class="btn btn-primary btn-lg" style="font-size:25px; float:right;">+</button>
+        </div>
     </div>
 </form>
 
-<script type="text/javascript">
-    $('#summand2').on('input', function(){
-            var summe = parseInt($('#summand1').text()) + parseInt($('#summand2').val())
-            if (isNaN(summe))
-                summe = $('#summand1').text()
-            $("#summe").text(summe);
-            });
-</script>
-                                    
 {% endblock %}
