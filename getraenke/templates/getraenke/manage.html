@@ -19,52 +19,85 @@
     </ul>
 </div>
 
-<form class="form-horizontal" role="form">
+{% if not empty %}
+
+<form class="form-horizontal" role="form" action="{{url}}" method="post" accept-charset="utf-8">
+    {%csrf_token%}
     <div class="container">
         <table class="table table-hover">
             <tr>
             <th style="width:25%;">Name</th><th style="width:25%;">Bierstriche</th>
             <th style="width:25%;">Colastriche</th><th style="width:25%;">Bezahlt (in €)</th>
             </tr>
-            <tr>
-                <td><div class="row"> <div class="col-md-2"><button class="btn btn-danger">&times;</button></div> 
-                    <p class="form-control-static col-md-10">asdf</p></div>
-                </td>
-                <td><div class="row">
-                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
-                    <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
-                    <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
-                </td>
-                <td><div class="row">
-                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
-                    <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
-                    <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
-                </td>
-                <td><div class="row">
-                    <div class="col-md-1"><p id ="summand" class="form-control-static">25</p></div>
-                    <div class="col-md-1"><p class="form-control-static">+</p></div>
-                    <div style="width:27%;" class="col-md-1"><input class="form-control" type="text" placeholder="0" disable></div>
-                    <div class="col-md-1"><p class="form-control-static">=</p></div>
-                    <div class="col-md-1"><p id="summe" class="form-control-static">25</p></div>
-                </td>
-            </tr>
+            {% for i in personen %}
+                <tr>
+                    <td><div class="row"> <div class="col-md-2">
+                            <a data-target="{{i.0}}" class="btn btn-danger delete-button">&times;</a></div> 
+                            <p class="form-control-static col-md-10">{{i.0}}</p></div>
+                    </td>
+                    <td><div class="row">
+                        <div class="col-md-1"><p id ="summand" class="form-control-static">{{i.1}}</p></div>
+                        <div class="col-md-1"><p class="form-control-static">+</p></div>
+                        <div style="width:27%;" class="col-md-1">
+                            <input id="{{i.0}}-bier" name="{{i.0}}-bier" class="form-control" type="text" placeholder="0" disable></div>
+                        <div class="col-md-1"><p class="form-control-static">=</p></div>
+                        <div class="col-md-1"><p id="summe" class="form-control-static"></p></div>
+                    </td>
+                    <td><div class="row">
+                        <div class="col-md-1"><p id ="summand" class="form-control-static">{{i.2}}</p></div>
+                        <div class="col-md-1"><p class="form-control-static">+</p></div>
+                        <div style="width:27%;" class="col-md-1">
+                            <input id="{{i.0}}-cola" name="{{i.0}}-cola" class="form-control" type="text" placeholder="0" disable></div>
+                        <div class="col-md-1"><p class="form-control-static">=</p></div>
+                        <div class="col-md-1"><p id="summe" class="form-control-static"></p></div>
+                    </td>
+                    <td><div class="row">
+                        <div class="col-md-1"><p id ="summand" class="form-control-static">{{i.3}}</p></div>
+                        <div class="col-md-1"><p class="form-control-static">+</p></div>
+                        <div style="width:27%;" class="col-md-1">
+                            <input id="{{i.0}}-geld" name="{{i.0}}-geld" class="form-control" type="text" placeholder="0" disable></div>
+                        <div class="col-md-1"><p class="form-control-static">=</p></div>
+                        <div class="col-md-1"><p id="summe" class="form-control-static"></p></div>
+                    </td>
+                </tr>
+            {% endfor %}
             <tr style="display:none;">
                 <td><div class="row"> 
-                    <div class="col-md-2"><button class="btn btn-success">&#10004;</button></div>
-                    <div class="col-md-10"><input class="form-control" type="text" placeholder="Name"></div></div>
+                    <div class="col-md-2"><button class="btn btn-success" type="submit">&#10004;</button></div>
+                    <div class="col-md-10"><input class="form-control" type="text" name="new-name" placeholder="Name"></div></div>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
         </table>
-        <div class="col-md-1 col-md-offset-5">
-            <button type="button" id="add-button" class="btn btn-primary btn-lg" style="font-size:25px; float:right;">+</button>
+        <div class="col-md-2">
+            <button type="button" id="add-button" class="btn btn-primary" style="float:right;">+</button>
+        </div>
+            <button class="btn btn-primary" type="submit" style="float:right;">Ändern</button>
+    </div>
+<div class="modal fade" id="delete-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                <h4 class="modal-title">Bist du sicher?</h4>
+            </div>
+            <div class="modal-body">
+                Wenn du diesen Eintrag löschst gehen alle Daten unwiederbringlich verloren!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                <button type="submit" class="btn btn-danger">Löschen</button>
+            </div>
         </div>
     </div>
+</div>
+<input type="text" id="data-input" name="data-input" style="display: none;">
 </form>
+
+{% else %}
+
+<div class="container" style="text-align: center; margin-bottom: 10px;">Für dieses Jahr sind noch keine Einträge in der Datenbank.</div>
+{% endif %}
 
 {% endblock %}

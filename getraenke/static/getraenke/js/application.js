@@ -5,6 +5,10 @@ $(document).ready(function() {
         $(".table tr:last").show();
         $(this).hide();
     });
+    $(".delete-button").on("click", function(){
+        $("#data-input").val($(this).data("target"));
+        $("#delete-modal").modal();
+    });
 });
 
 function updateSum (){
