@@ -3,17 +3,10 @@ from django.contrib.auth.models import User
 
 class Monat (models.Model):
 	bierstriche = models.IntegerField(default=0)
-	colasnacktriche = models.IntegerField(default=0)
-	#snackstriche = models.IntegerField(default=0)
+	colastriche = models.IntegerField(default=0)
 	bezahlt = models.IntegerField(default=0)
 
-	def add_monat():
-		m = Monat()
-		m.save()
-		return m
-
 class Jahr(models.Model):
-	#person = models.ForeignKey(Person)
 	sonstige_kosten = models.IntegerField(default=0)
 	bemerkung = models.TextField()
 	jahr = models.IntegerField()
