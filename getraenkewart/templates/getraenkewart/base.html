@@ -42,35 +42,33 @@
                         {% endif %}
                     {% endif %}
 			    </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if name == "" %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <div class="container" style="min-width: 200px;">
-                                <form action="{% url 'login' %}" method="post" accept-charset="utf-8" role="form">
-                                    {% csrf_token %}
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input id="username" name="username" type="text" placeholder="Benutzername" class="form-control"/>
+                {% if name == "" %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <div class="container" style="min-width: 200px;">
+                                    <form action="{% url 'login' %}" method="post" accept-charset="utf-8" role="form">
+                                        {% csrf_token %}
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input id="username" name="username" type="text" placeholder="Benutzername" class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="password" name="password" type="password" placeholder="Passwort" class="form-control"/>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <input id="password" name="password" type="password" placeholder="Passwort" class="form-control"/>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary" style="float:right;" type="submit" >Login</button>
-                                </form>
-                                <a style="float:left; margin-top:6px; margin-left:5px;" href="{% url 'register' %}">Registrieren</a>
-                            </div>
-                        </ul> 
-                    </li>
-                    {% else %}
-                    <ul class="nav navbar-nav">
-                        <p class="navbar-text">Hallo {{ name }}!</p>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                                        <button class="btn btn-primary" style="float:right;" type="submit" >Login</button>
+                                    </form>
+                                    <a style="float:left; margin-top:6px; margin-left:5px;" href="{% url 'register' %}">Registrieren</a>
+                                </div>
+                            </ul> 
+                        </li>
                     </ul>
-                    {% endif %}
-                </ul>
+                {% else %}
+                    <p class="navbar-text pull-right">Hallo {{ name }}!
+                    <a class="navbar-link" style="margin-left: 5px; margin-right: 10px;" href="{% url 'logout' %}">Logout</a></p>
+                {% endif %}
             </div>
         </div>
 	</nav>
