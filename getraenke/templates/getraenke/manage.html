@@ -83,7 +83,7 @@
                 <h4 class="modal-title">Bist du sicher?</h4>
             </div>
             <div class="modal-body">
-                Wenn du diesen Eintrag löschst gehen alle Daten unwiederbringlich verloren!
+                Willst du wirklich alle Einträge von dieser Person von diesem Jahr löschen?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
@@ -97,7 +97,36 @@
 
 {% else %}
 
-<div class="container" style="text-align: center; margin-bottom: 10px;">Für dieses Jahr sind noch keine Einträge in der Datenbank.</div>
+<div class="container" style="text-align: center; margin-bottom: 10px;">Für dieses Jahr sind noch keine Einträge in der Datenbank. Wer soll in das neue Jahr übernommen werden?</div>
+<form class="form-horizontal" role="form" action="{{url}}" method="post" accept-charset="utf-8">
+    {%csrf_token%}
+    <div class="container">
+        <table class="table table-hover">
+        <tr>
+            <th style="text-align: center;">Name</th>
+        </tr>
+        {% for i in personen %}
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="checkbox col-md-1">
+                            <label>
+                                {% if i.1 %}
+                                    <input type="checkbox" name="{{i.0}}-check" style="margin-left: 50px;" checked>
+                                {% else %}
+                                    <input type="checkbox" name="{{i.0}}-check" style="margin-left: 50px;">
+                                {% endif %}
+                            </label>
+                        </div>
+                            <div class="col-md-1"><p class="form-control-static">{{i.0}}</p></div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        <button class="btn btn-primary" type="submit" style="float: right;" name="new-year">Personen übernehmen</button>
+    </div>
+</form>
 {% endif %}
 
 {% endblock %}

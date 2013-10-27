@@ -91,101 +91,111 @@ def manage(request, year=None, month=None):
         context.update({'month_previous':month-1, 'month_next':month+1})
     context.update({"url":request.path})
     if request.method == "POST":
-        for i in Person.objects.filter(jahre__jahr__exact=year):
-            try:
-                bier = int(request.POST[i.name + "-bier"])
-            except ValueError:
-                bier = 0
-            try:
-                cola = int(request.POST[i.name + "-cola"])
-            except ValueError:
-                cola = 0
-            try:
-                geld = int(request.POST[i.name + "-geld"])
-            except ValueError:
-                geld = 0
-            j = i.jahre.get(jahr=year)
-            if month == 1:
-                j.januar.bierstriche += bier
-                j.januar.colastriche += cola
-                j.januar.bezahlt += geld
-                j.januar.save()
-            if month == 2:
-                j.februar.bierstriche += bier
-                j.februar.colastriche += cola
-                j.februar.bezahlt += geld
-                j.februar.save()
-            if month == 3:
-                j.maerz.bierstriche += bier
-                j.maerz.colastriche += cola
-                j.maerz.bezahlt += geld
-                j.maerz.save()
-            if month == 4:
-                j.april.bierstriche += bier
-                j.april.colastriche += cola
-                j.april.bezahlt += geld
-                j.april.save()
-            if month == 5:
-                j.mai.bierstriche += bier
-                j.mai.colastriche += cola
-                j.mai.bezahlt += geld
-                j.mai.save()
-            if month == 6:
-                j.juni.bierstriche += bier
-                j.juni.colastriche += cola
-                j.juni.bezahlt += geld
-                j.juni.save()
-            if month == 7:
-                j.juli.bierstriche += bier
-                j.juli.colastriche += cola
-                j.juli.bezahlt += geld
-                j.juli.save()
-            if month == 8:
-                j.august.bierstriche += bier
-                j.august.colastriche += cola
-                j.august.bezahlt += geld
-                j.august.save()
-            if month == 9:
-                j.september.bierstriche += bier
-                j.september.colastriche += cola
-                j.september.bezahlt += geld
-                j.september.save()
-            if month == 10:
-                j.oktober.bierstriche += bier
-                j.oktober.colastriche += cola
-                j.oktober.bezahlt += geld
-                j.oktober.save()
-            if month == 11:
-                j.november.bierstriche += bier
-                j.november.colastriche += cola
-                j.november.bezahlt += geld
-                j.november.save()
-            if month == 12:
-                j.dezember.bierstriche += bier
-                j.dezember.colastriche += cola
-                j.dezember.bezahlt += geld
-                j.dezember.save()
-        if request.POST["new-name"] != "":
-            if Person.objects.filter(name=request.POST["new-name"]).exists():
-                messages.error(request, "Namen dürfen nicht doppelt vorkommen.")
-            else:
-                person = Person(name=request.POST["new-name"])
-                person.save()
-                person.add_year(year)
-        if request.POST["data-input"] != "":
-            Person.objects.get(name=request.POST["data-input"]).delete()
+        if "new-year" in request.POST:
+            for i in Person.objects.all():
+                if i.name + "-check" in request.POST:
+                    i.add_year(year)
+        else:
+            for i in Person.objects.filter(jahre__jahr__exact=year):
+                try:
+                    bier = int(request.POST[i.name + "-bier"])
+                except ValueError:
+                    bier = 0
+                try:
+                    cola = int(request.POST[i.name + "-cola"])
+                except ValueError:
+                    cola = 0
+                try:
+                    geld = int(request.POST[i.name + "-geld"])
+                except ValueError:
+                    geld = 0
+                j = i.jahre.get(jahr=year)
+                if month == 1:
+                    j.januar.bierstriche += bier
+                    j.januar.colastriche += cola
+                    j.januar.bezahlt += geld
+                    j.januar.save()
+                if month == 2:
+                    j.februar.bierstriche += bier
+                    j.februar.colastriche += cola
+                    j.februar.bezahlt += geld
+                    j.februar.save()
+                if month == 3:
+                    j.maerz.bierstriche += bier
+                    j.maerz.colastriche += cola
+                    j.maerz.bezahlt += geld
+                    j.maerz.save()
+                if month == 4:
+                    j.april.bierstriche += bier
+                    j.april.colastriche += cola
+                    j.april.bezahlt += geld
+                    j.april.save()
+                if month == 5:
+                    j.mai.bierstriche += bier
+                    j.mai.colastriche += cola
+                    j.mai.bezahlt += geld
+                    j.mai.save()
+                if month == 6:
+                    j.juni.bierstriche += bier
+                    j.juni.colastriche += cola
+                    j.juni.bezahlt += geld
+                    j.juni.save()
+                if month == 7:
+                    j.juli.bierstriche += bier
+                    j.juli.colastriche += cola
+                    j.juli.bezahlt += geld
+                    j.juli.save()
+                if month == 8:
+                    j.august.bierstriche += bier
+                    j.august.colastriche += cola
+                    j.august.bezahlt += geld
+                    j.august.save()
+                if month == 9:
+                    j.september.bierstriche += bier
+                    j.september.colastriche += cola
+                    j.september.bezahlt += geld
+                    j.september.save()
+                if month == 10:
+                    j.oktober.bierstriche += bier
+                    j.oktober.colastriche += cola
+                    j.oktober.bezahlt += geld
+                    j.oktober.save()
+                if month == 11:
+                    j.november.bierstriche += bier
+                    j.november.colastriche += cola
+                    j.november.bezahlt += geld
+                    j.november.save()
+                if month == 12:
+                    j.dezember.bierstriche += bier
+                    j.dezember.colastriche += cola
+                    j.dezember.bezahlt += geld
+                    j.dezember.save()
+            if request.POST["new-name"] != "":
+                if Person.objects.filter(name=request.POST["new-name"]).exists():
+                    messages.error(request, "Namen dürfen nicht doppelt vorkommen.")
+                else:
+                    person = Person(name=request.POST["new-name"])
+                    person.save()
+                    person.add_year(year)
+            if request.POST["data-input"] != "":
+                person = Person.objects.get(name=request.POST["data-input"])
+                person.jahre.get(jahr=year).delete()
+                if not person.jahre.exists():
+                    person.delete()
 
     persObjects = Person.objects.filter(jahre__jahr__exact=year)
+    personen = []
     empty = True
     if not Person.objects.exists():
         empty = False
     if not persObjects.exists():
         prevPersObjects = Person.objects.filter(jahre__jahr__exact=year-1)
-        if prevPersObjects.exists():
-            for i in prevPersObjects:
-                i.add_year(year)
+        for i in Person.objects.all():
+            if i in prevPersObjects:
+                personen.append([i.name, True])
+            else:
+                personen.append([i.name, False])
             
-    personen = []
     for i in persObjects:
         empty = False
         j = i.jahre.get(jahr=year)
@@ -240,6 +250,7 @@ def manage(request, year=None, month=None):
         personen.append([i.name, bier, cola, bezahlt])
     if empty:
         context.update({'empty':True})
+        context.update({'personen':personen})
     else:
         context.update({'personen':personen})
     context.update(standard_checks(request, "verwalten"))
