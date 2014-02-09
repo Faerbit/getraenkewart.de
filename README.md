@@ -1,3 +1,8 @@
-#getraenkewart.de - Homepage der Rover DPSG Stamm Kohlscheid I
+#getraenkewart.de
 
-Hier gibt's noch nicht so viel zu sehen.
+A djang project for my scout group
+
+This is a little django project of mine.
+Currently it is very much WIP and everything is subject to change.
+It isn't viable in any way currently.
+Also the target audience is german and I don't intend to translate it.

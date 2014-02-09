@@ -2,3 +2,4 @@ database/
 __pycache__/
 *.swp
 getraenkewart/settings.py
+.coverage
