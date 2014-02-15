@@ -1,6 +1,6 @@
 #getraenkewart.de
 
-A djang project for my scout group
+A django project for my scout group
 
 This is a little django project of mine.
 Currently it is very much WIP and everything is subject to change.
