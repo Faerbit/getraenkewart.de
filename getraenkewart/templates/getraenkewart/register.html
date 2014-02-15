@@ -24,13 +24,21 @@
                     <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nachname" value="{{last_name}}">
                 </div>
             </div>
+            {% if email_error %}
+            <div class="form-group has-error">
+            {% else %}
+            <div class="form-group">
+            {% endif %}
+                <label for="e-mail">E-mail</label>
+                <input type="email" class="form-control" id="e-mail" name="e-mail" placeholder="E-mail" value="{{email}}">
+            </div>
             {% if username_error %}
             <div class="form-group has-error">
             {% else %}
             <div class="form-group">
             {% endif %}
                 <label for="username">Benutzername</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Benutzername" value="{{username}}">
+                <input type="text" class="form-control" id="registration_username" name="registration_username" placeholder="Benutzername" value="{{username}}">
             </div>
             {% if password_error %}
             <div class="form-group has-error">
@@ -38,9 +46,9 @@
             <div class="form-group">
             {% endif %}
                 <label for="password">Passwort</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Passwort" value="{{password}}">
+                <input type="password" class="form-control" id="registration_password" name="registration_password" placeholder="Passwort" value="{{password}}">
             </div>
-            <button class="btn btn-primary" style="float:right;" type="submit">Registrieren</button>
+            <button class="btn btn-primary" id="register-button" style="float:right;" type="submit">Registrieren</button>
         </div>
     </div>
 </form>

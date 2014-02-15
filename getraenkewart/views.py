@@ -41,8 +41,8 @@ def register(request):
     else:
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST['registration_username']
+        password = request.POST['registration_password']
         data = {'first_name':first_name, 'last_name':last_name, 'username':username, 'password':password}
         error = False
         context = dict()
