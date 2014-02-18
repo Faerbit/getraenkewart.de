@@ -1,8 +1,9 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from getraenkewart.forms import (
     RegistrationForm, PASSWORDS_NOT_MATCHING_ERROR,
-    PASSWORDS_TOO_SHORT_ERROR
+    PASSWORDS_TOO_SHORT_ERROR, USERNAME_EXISTS_ERROR
 )
 
 class TestRegistrationForm(TestCase):
@@ -91,3 +92,20 @@ class TestRegistrationForm(TestCase):
                 form.errors["password"],
                 [PASSWORDS_TOO_SHORT_ERROR]
             )
+
+    def test_form_checks_for_duplicate_users(self):
+        User.objects.create_user("john", "jon@provider.com", "secret12")
+        form = RegistrationForm(data = { 
+                "first_name":"John",
+                "last_name":"Shmidt",
+                "username":"john",
+                "email":"jon@provider.com",
+                "password":"secret12",
+                "password2":"secret12",
+            })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+                form.errors["__all__"],
+                [USERNAME_EXISTS_ERROR]
+            )
+
