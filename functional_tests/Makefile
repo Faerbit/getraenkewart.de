@@ -2,4 +2,4 @@ all: current_test
 
 current_test:
 	clear;hr
-	cd ..; python manage.py test functional_tests.test_login_and_registration
+	cd ..; coverage run manage.py test functional_tests.test_layout_and_styling
