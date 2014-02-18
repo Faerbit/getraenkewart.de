@@ -11,12 +11,12 @@ class EightCharField(forms.CharField):
             raise forms.ValidationError(PASSWORDS_TOO_SHORT_ERROR)
 
 class RegistrationForm(forms.Form):
-    first_name = forms.CharField(label="Vorname",
+    first_name = forms.CharField(max_length=30, label="Vorname",
             widget = forms.TextInput(attrs = {
                 "class":"form-control",
                 "placeholder":"Vorname",
             }))
-    last_name = forms.CharField(label="Nachname",
+    last_name = forms.CharField(max_length=30, label="Nachname",
             widget = forms.TextInput(attrs = {
                 "class":"form-control",
                 "placeholder":"Nachname",
