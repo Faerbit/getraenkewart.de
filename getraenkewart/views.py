@@ -23,22 +23,18 @@ def login_view(request):
         if user.is_active:
             login(request, user)
             messages.success(request, LOGIN_SUCCESFUL)
-            context = standard_checks(request, "start")
-            return render (request, "getraenkewart/index.html", context)
+            return redirect(index)
         else:
             messages.error(request, NOT_ACTIVE_ERROR) 
-            context = standard_checks(request, "start")
-            return render (request, "getraenkewart/index.html", context)
+            return redirect(index)
     else:
         messages.error(request, WRONG_PASSWORD_ERROR) 
-        context = standard_checks(request, "start")
-        return render (request, "getraenkewart/index.html", context)
+        return redirect(index)
 
 def logout_view(request):
     logout(request)
     messages.success(request, LOGOUT_SUCCESFUL)
-    context = standard_checks(request, "start")
-    return render(request, "getraenkewart/index.html", context)
+    return redirect(index)
 
 def register(request):
     if request.method =="GET":

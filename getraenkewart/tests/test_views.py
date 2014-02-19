@@ -4,8 +4,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.messages import constants as MSG
 
 from getraenkewart.views import (
-        login_view, logout_view, register, index,
-        REGISTRATION_SUCCESS
+        REGISTRATION_SUCCESS, LOGIN_SUCCESFUL, LOGOUT_SUCCESFUL,
+        WRONG_PASSWORD_ERROR, NOT_ACTIVE_ERROR
     )
 from getraenkewart.forms import RegistrationForm
 
@@ -18,6 +18,86 @@ class HomepageTests(TestCase):
     def test_sets_active_nav_correct(self):
         response = self.client.get("/")
         self.assertEqual(response.context["active_nav"], "start")
+
+class LoginTests(TestCase):
+
+    def test_user_can_login(self):
+        User.objects.create_user("john", "", "secret12")
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertIn(LOGIN_SUCCESFUL, 
+            response.cookies["messages"].value)
+
+    def test_redirects_after_login(self):
+        User.objects.create_user("john", "", "secret12")
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertRedirects(response, "/")
+
+    def test_gives_appropriate_error_if_user_is_not_active(self):
+        User.objects.create_user("john", "", "secret12")
+        user = User.objects.all()[0]
+        user.is_active = False
+        user.save()
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertIn(NOT_ACTIVE_ERROR, 
+            response.cookies["messages"].value)
+
+    def test_redirects_after_not_active_error(self):
+        User.objects.create_user("john", "", "secret12")
+        user = User.objects.all()[0]
+        user.is_active = False
+        user.save()
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertRedirects(response, "/")
+
+    def test_gives_appropriate_error_if_the_password_is_wrong(self):
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertIn(WRONG_PASSWORD_ERROR, 
+            response.cookies["messages"].value)
+
+    def test_redirects_after_wrong_password_error(self):
+        response = self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        self.assertRedirects(response, "/")
+
+class LogoutTests(TestCase):
+    
+    def test_user_can_logout(self):
+        User.objects.create_user("john", "", "secret12")
+        # log user in to let him logout
+        self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        response = self.client.post("/logout/")
+        self.assertIn(LOGOUT_SUCCESFUL, 
+            response.cookies["messages"].value)
+
+    def test_logout_redirects_after_logout(self):
+        User.objects.create_user("john", "", "secret12")
+        # log user in to let him logout
+        self.client.post("/login/", {
+            "username":"john",
+            "password":"secret12"
+            })
+        response = self.client.post("/logout/")
+        self.assertRedirects(response, "/")
 
 class RegisterTests(TestCase):
 
@@ -59,6 +139,7 @@ class RegisterTests(TestCase):
         self.assertEqual(new_user.last_name, "Shmidt")
         self.assertEqual(new_user.username, "john")
         self.assertEqual(new_user.email, "john@provider.com")
+        self.assertFalse(new_user.is_active)
         self.assertTrue(check_password("secret12", new_user.password))
 
     def test_registration_displays_success(self):
@@ -82,6 +163,6 @@ class RegisterTests(TestCase):
                 "password":"secret1",
                 "password2":"secret1",
             })
-        for message in list(response.context["messages"]):
+        for msgObject in list(response.context["messages"]):
             self.assertIn("Passwort muss mindestens 8 Zeichen lang sein.", 
-                message.message)
+                msgObject.message)
