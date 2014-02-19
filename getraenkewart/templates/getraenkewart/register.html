@@ -7,46 +7,54 @@
     <div class="container">
         <div class="col-md-10 col-md-offset-1">
             <div class="row">
-                {% if first_name_error %}
+                {% if form.first_name.errors %}
                 <div class="form-group has-error col-md-6">
                 {% else %}
                 <div class="form-group col-md-6">
                 {% endif%}
-                    <label for="first_name">Vorname</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Vorname" value="{{first_name}}">
+                    {{ form.first_name.label_tag}}
+                    {{ form.first_name}}
                 </div>
-                {% if last_name_error %}
+                {% if form.last_name.errors %}
                 <div class="form-group has-error col-md-6">
                 {% else %}
                 <div class="form-group col-md-6">
                 {% endif %}
-                    <label for="last_name">Nachname</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nachname" value="{{last_name}}">
+                    {{ form.last_name.label_tag}}
+                    {{ form.last_name}}
                 </div>
             </div>
-            {% if email_error %}
+            {% if form.email.errors %}
             <div class="form-group has-error">
             {% else %}
             <div class="form-group">
             {% endif %}
-                <label for="e-mail">E-mail</label>
-                <input type="email" class="form-control" id="e-mail" name="e-mail" placeholder="E-mail" value="{{email}}">
+                {{ form.email.label_tag}}
+                {{ form.email}}
             </div>
-            {% if username_error %}
+            {% if form.username.errors %}
             <div class="form-group has-error">
             {% else %}
             <div class="form-group">
             {% endif %}
-                <label for="username">Benutzername</label>
-                <input type="text" class="form-control" id="registration_username" name="registration_username" placeholder="Benutzername" value="{{username}}">
+                    {{ form.username.label_tag}}
+                    {{ form.username}}
             </div>
-            {% if password_error %}
+            {% if form.password.errors %}
             <div class="form-group has-error">
             {% else %}
             <div class="form-group">
             {% endif %}
-                <label for="password">Passwort</label>
-                <input type="password" class="form-control" id="registration_password" name="registration_password" placeholder="Passwort" value="{{password}}">
+                    {{ form.password.label_tag}}
+                    {{ form.password}}
+            </div>
+            {% if form.password2.errors %}
+            <div class="form-group has-error">
+            {% else %}
+            <div class="form-group">
+            {% endif %}
+                    {{ form.password2.label_tag}}
+                    {{ form.password2}}
             </div>
             <button class="btn btn-primary" id="register-button" style="float:right;" type="submit">Registrieren</button>
         </div>
