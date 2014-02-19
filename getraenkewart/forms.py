@@ -51,6 +51,8 @@ class RegistrationForm(forms.Form):
         password2 = cleaned_data.get("password2")
         if User.objects.filter(username__exact=username).exists():
             raise forms.ValidationError(USERNAME_EXISTS_ERROR)
-        if password != password2:
-            raise forms.ValidationError(PASSWORDS_NOT_MATCHING_ERROR)
+        # Do not check for matching password if password is empty,
+        # because this gives "weird" errors to the user
+        if password and password != password2:
+                raise forms.ValidationError(PASSWORDS_NOT_MATCHING_ERROR)
         return cleaned_data

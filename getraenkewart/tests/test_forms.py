@@ -121,3 +121,19 @@ class TestRegistrationForm(TestCase):
             })
         self.assertTrue(form.is_valid())
         self.assertEqual(form.errors, dict())
+
+    def test_form_gives_no_password_not_matching_errors_if_password_is_to_short(self):
+        form = RegistrationForm(data = { 
+                "first_name":"John",
+                "last_name":"Shmidt",
+                "username":"john",
+                "email":"jon@provider.com",
+                "password":"secret1",
+                "password2":"secret1",
+            })
+        form.is_valid()
+        for _, error in form.errors.items():
+            self.assertNotIn(
+                    PASSWORDS_NOT_MATCHING_ERROR,
+                    error
+                )
