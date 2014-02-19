@@ -109,3 +109,15 @@ class TestRegistrationForm(TestCase):
                 [USERNAME_EXISTS_ERROR]
             )
 
+    def test_form_accepts_further_users(self):
+        User.objects.create_user("john", "jon@provider.com", "secret12")
+        form = RegistrationForm(data = { 
+                "first_name":"John",
+                "last_name":"Shmidt",
+                "username":"jon",
+                "email":"jon@provider.com",
+                "password":"secret12",
+                "password2":"secret12",
+            })
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.errors, dict())
