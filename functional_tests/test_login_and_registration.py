@@ -63,7 +63,8 @@ class RegistrationTest(FunctionalTest):
         self.assertEqual(email_input.get_attribute("value"), email)
         username_input = self.browser.find_element_by_id("id_username")
         self.assertEqual(username_input.get_attribute("value"), username)
+        # mit Ausnahme der Passwörter
         password_input = self.browser.find_element_by_id("id_password")
-        self.assertEqual(password_input.get_attribute("value"), password)
+        self.assertEqual(password_input.get_attribute("value"), "")
         password_input2 = self.browser.find_element_by_id("id_password2")
-        self.assertEqual(password_input.get_attribute("value"), password)
+        self.assertEqual(password_input.get_attribute("value"), "")
