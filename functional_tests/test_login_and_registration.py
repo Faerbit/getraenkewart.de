@@ -12,11 +12,12 @@ class RegistrationTest(FunctionalTest):
         self.browser.find_element_by_link_text("Registrieren").click()
 
         #Er gibt seine Daten ein
-        self.browser.find_element_by_id("first_name").send_keys("Jonas")
-        self.browser.find_element_by_id("last_name").send_keys("Schmidt")
-        self.browser.find_element_by_id("e-mail").send_keys("jonny@provider.com")
-        self.browser.find_element_by_id("registration_username").send_keys("jonny")
-        self.browser.find_element_by_id("registration_password").send_keys("secret12")
+        self.browser.find_element_by_id("id_first_name").send_keys("Jonas")
+        self.browser.find_element_by_id("id_last_name").send_keys("Schmidt")
+        self.browser.find_element_by_id("id_email").send_keys("jonny@provider.com")
+        self.browser.find_element_by_id("id_username").send_keys("jonny")
+        self.browser.find_element_by_id("id_password").send_keys("secret12")
+        self.browser.find_element_by_id("id_password2").send_keys("secret12")
 
         # Er schickt seine Registrierung ab
         self.browser.find_element_by_id("register-button").click()
@@ -31,19 +32,21 @@ class RegistrationTest(FunctionalTest):
         username = "jonny"
         password = "secret"
         # Jonas möchte sich registrieren
-        self.browser.get(self.server_url + "/register")
+        self.browser.get(self.server_url + "/register/")
 
         #Er gibt seine Daten ein
-        first_name_input = self.browser.find_element_by_id("first_name")
+        first_name_input = self.browser.find_element_by_id("id_first_name")
         first_name_input.send_keys(first_name)
-        last_name_input = self.browser.find_element_by_id("last_name")
+        last_name_input = self.browser.find_element_by_id("id_last_name")
         last_name_input.send_keys(last_name)
-        email_input = self.browser.find_element_by_id("e-mail")
+        email_input = self.browser.find_element_by_id("id_email")
         email_input.send_keys(email)
-        username_input = self.browser.find_element_by_id("registration_username")
+        username_input = self.browser.find_element_by_id("id_username")
         username_input.send_keys(username)
-        password_input = self.browser.find_element_by_id("registration_password")
+        password_input = self.browser.find_element_by_id("id_password")
         password_input.send_keys(password)
+        password_input2 = self.browser.find_element_by_id("id_password2")
+        password_input2.send_keys(password)
 
         # Er schickt seine Registrierung ab
         self.browser.find_element_by_id("register-button").click()
@@ -52,13 +55,15 @@ class RegistrationTest(FunctionalTest):
         self.assertIn("muss mindestens 8 Zeichen lang sein", self.browser.find_element_by_class_name("alert").text)
 
         # zum Glück sind seine Daten noch da
-        first_name_input = self.browser.find_element_by_id("first_name")
+        first_name_input = self.browser.find_element_by_id("id_first_name")
         self.assertEqual(first_name_input.get_attribute("value"), first_name)
-        last_name_input = self.browser.find_element_by_id("last_name")
+        last_name_input = self.browser.find_element_by_id("id_last_name")
         self.assertEqual(last_name_input.get_attribute("value"), last_name)
-        email_input = self.browser.find_element_by_id("e-mail")
+        email_input = self.browser.find_element_by_id("id_email")
         self.assertEqual(email_input.get_attribute("value"), email)
-        username_input = self.browser.find_element_by_id("registration_username")
+        username_input = self.browser.find_element_by_id("id_username")
         self.assertEqual(username_input.get_attribute("value"), username)
-        password_input = self.browser.find_element_by_id("registration_password")
+        password_input = self.browser.find_element_by_id("id_password")
+        self.assertEqual(password_input.get_attribute("value"), password)
+        password_input2 = self.browser.find_element_by_id("id_password2")
         self.assertEqual(password_input.get_attribute("value"), password)
