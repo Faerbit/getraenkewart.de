@@ -87,9 +87,6 @@ class LoginAndLogoutTests(FunctionalTest):
         # Zufrieden stellt er fest, dass es funktioniert hat
         self.assertIn("Erfolgreich eingeloggt!", self.browser.find_element_by_class_name("alert").text)
         # Nun möchte er sich wieder ausloggen
-        # Currently broken...
-        #WebDriverWait(self.browser, 5).until(
-        #    lambda driver: driver.find_element_by_id('logout-button'))
-        #self.browser.find_element_by_id("logout-button").click()
+        self.browser.find_element_by_id("logout-button").click()
         # Zufrieden stellt er fest, dass es funktioniert hat
         self.assertIn("Erfolgreich ausgeloggt!", self.browser.find_element_by_class_name("alert").text)

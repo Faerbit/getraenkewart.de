@@ -15,10 +15,6 @@ class HomepageTests(TestCase):
         response = self.client.get("/")
         self.assertTemplateUsed("getraenkewart/home.html")
 
-    def test_sets_active_nav_correct(self):
-        response = self.client.get("/")
-        self.assertEqual(response.context["active_nav"], "start")
-
 class LoginTests(TestCase):
 
     def test_user_can_login(self):
@@ -104,10 +100,6 @@ class RegisterTests(TestCase):
     def test_register_page_uses_register_template(self):
         response = self.client.get("/register/")
         self.assertTemplateUsed("getraenkewart/register.html")
-
-    def test_sets_active_nav_correct(self):
-        response = self.client.get("/register/")
-        self.assertEqual(response.context["active_nav"], "start")
 
     def test_registration_page_uses_form(self):
         response = self.client.get("/register/")

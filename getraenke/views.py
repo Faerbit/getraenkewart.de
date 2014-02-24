@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from getraenke.models import Person, Jahr, Monat
-from  getraenkewart.views import standard_checks
 from datetime import date
 from django.contrib import messages
 #import pdb
@@ -65,7 +64,6 @@ def highscore(request, year=None):
         context.update({'personen':personen})
     else:
         context.update({'empty':True})
-    context.update(standard_checks(request, "getraenke"))
     return render (request, "getraenke/highscore.html", context)
 
 def manage(request, year=None, month=None):
@@ -253,5 +251,4 @@ def manage(request, year=None, month=None):
         context.update({'personen':personen})
     else:
         context.update({'personen':personen})
-    context.update(standard_checks(request, "verwalten"))
     return render (request, "getraenke/manage.html", context)

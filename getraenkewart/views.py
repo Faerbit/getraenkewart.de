@@ -12,8 +12,7 @@ WRONG_PASSWORD_ERROR = "Dein Passwort oder dein Benutzername ist falsch."
 NOT_ACTIVE_ERROR = "Du bist noch nicht aktiviert! Frag mal nach."
 
 def index(request):
-    context = standard_checks(request, "start")
-    return render (request, "getraenkewart/index.html", context)
+    return render (request, "getraenkewart/index.html")
 
 def login_view(request):
     username = request.POST['username']
@@ -39,9 +38,7 @@ def logout_view(request):
 def register(request):
     if request.method =="GET":
         form = RegistrationForm()
-        context = standard_checks(request, "start")
-        context.update({"form":form})
-        return render(request, "getraenkewart/register.html", context)
+        return render(request, "getraenkewart/register.html", {"form":form})
     else:
         form = RegistrationForm(request.POST)
         form.full_clean()
@@ -62,16 +59,4 @@ def register(request):
         else:
             for _, error in form.errors.items():
                 messages.error(request, error)
-            context = standard_checks(request, "start")
-            context.update({"form":form})
-            return render(request, "getraenkewart/register.html", context)
-
-def standard_checks(request, active_nav):
-    if request.user.is_authenticated():
-        name = request.user.first_name
-    else:
-        name = ""
-    if request.user.is_staff:
-        return {'name':name, 'is_staff':True, 'active_nav':active_nav}
-    else:
-        return {'name':name, 'is_staff':False, 'active_nav':active_nav}
+            return render(request, "getraenkewart/register.html", {"form":form})
