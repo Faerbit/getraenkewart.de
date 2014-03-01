@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.hashers import check_password
 from django.contrib.messages import constants as MSG
+from django.core.urlresolvers import reverse
 
 from getraenkewart.views import (
         REGISTRATION_SUCCESS, LOGIN_SUCCESFUL, LOGOUT_SUCCESFUL,
@@ -12,14 +13,14 @@ from getraenkewart.forms import RegistrationForm
 class HomepageTests(TestCase):
     
     def test_home_page_uses_home_page_template(self):
-        response = self.client.get("/")
+        response = self.client.get(reverse("index"))
         self.assertTemplateUsed("getraenkewart/home.html")
 
 class LoginTests(TestCase):
 
     def test_user_can_login(self):
         User.objects.create_user("john", "", "secret12")
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
@@ -28,18 +29,18 @@ class LoginTests(TestCase):
 
     def test_redirects_after_login(self):
         User.objects.create_user("john", "", "secret12")
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("index"))
 
     def test_gives_appropriate_error_if_user_is_not_active(self):
         User.objects.create_user("john", "", "secret12")
         user = User.objects.all()[0]
         user.is_active = False
         user.save()
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
@@ -51,14 +52,14 @@ class LoginTests(TestCase):
         user = User.objects.all()[0]
         user.is_active = False
         user.save()
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("index"))
 
     def test_gives_appropriate_error_if_the_password_is_wrong(self):
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
@@ -66,47 +67,47 @@ class LoginTests(TestCase):
             response.cookies["messages"].value)
 
     def test_redirects_after_wrong_password_error(self):
-        response = self.client.post("/login/", {
+        response = self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("index"))
 
 class LogoutTests(TestCase):
     
     def test_user_can_logout(self):
         User.objects.create_user("john", "", "secret12")
         # log user in to let him logout
-        self.client.post("/login/", {
+        self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
-        response = self.client.post("/logout/")
+        response = self.client.post(reverse("logout"))
         self.assertIn(LOGOUT_SUCCESFUL, 
             response.cookies["messages"].value)
 
     def test_logout_redirects_after_logout(self):
         User.objects.create_user("john", "", "secret12")
         # log user in to let him logout
-        self.client.post("/login/", {
+        self.client.post(reverse("login"), {
             "username":"john",
             "password":"secret12"
             })
-        response = self.client.post("/logout/")
-        self.assertRedirects(response, "/")
+        response = self.client.post(reverse("logout"))
+        self.assertRedirects(response, reverse("index"))
 
 class RegisterTests(TestCase):
 
     def test_register_page_uses_register_template(self):
-        response = self.client.get("/register/")
+        response = self.client.get(reverse("register"))
         self.assertTemplateUsed("getraenkewart/register.html")
 
     def test_registration_page_uses_form(self):
-        response = self.client.get("/register/")
+        response = self.client.get(reverse("register"))
         self.assertIsInstance(response.context["form"], RegistrationForm)
 
     def test_registration_redirects_after_success(self):
-        response = self.client.post("/register/", {
+        response = self.client.post(reverse("register"), {
                 "first_name":"John",
                 "last_name":"Shmidt",
                 "username":"john",
@@ -114,10 +115,10 @@ class RegisterTests(TestCase):
                 "password":"secret12",
                 "password2":"secret12",
             })
-        self.assertRedirects(response,"/")
+        self.assertRedirects(response,reverse("index"))
 
     def test_registration_saves_user_to_db(self):
-        response = self.client.post("/register/", {
+        response = self.client.post(reverse("register"), {
                 "first_name":"John",
                 "last_name":"Shmidt",
                 "username":"john",
@@ -135,7 +136,7 @@ class RegisterTests(TestCase):
         self.assertTrue(check_password("secret12", new_user.password))
 
     def test_registration_displays_success(self):
-        response = self.client.post("/register/", {
+        response = self.client.post(reverse("register"), {
                 "first_name":"John",
                 "last_name":"Shmidt",
                 "username":"john",
@@ -147,7 +148,7 @@ class RegisterTests(TestCase):
                 response.cookies["messages"].value)
 
     def test_registration_displays_form_errors(self):
-        response = self.client.post("/register/", {
+        response = self.client.post(reverse("register"), {
                 "first_name":"John",
                 "last_name":"Shmidt",
                 "username":"john",
