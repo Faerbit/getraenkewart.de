@@ -1,5 +1,7 @@
 #getraenkewart.de
 
+Production: [![Build Status](https://travis-ci.org/Faerbit/getraenkewart.de.png?branch=production)](https://travis-ci.org/Faerbit/getraenkewart.de) Development: [![Build Status](https://travis-ci.org/Faerbit/getraenkewart.de.png?branch=develop)](https://travis-ci.org/Faerbit/getraenkewart.de)
+
 A django project for my scout group
 
 This is a little django project of mine.
