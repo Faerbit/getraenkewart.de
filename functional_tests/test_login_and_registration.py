@@ -75,7 +75,7 @@ class LoginAndLogoutTests(FunctionalTest):
 
     def test_registered_user_can_login_and_logout(self):
         # John ist ein registrierter Nutzer
-        if not against_staging:
+        if not self.against_staging:
             User.objects.create_user("john", "john@provider.com", "secret12")
         else:
             self.fail("Implement against staging!")
