@@ -1,21 +1,6 @@
-from .base import LoggedInTest
+from .base import LoggedInStaffTest
 
-class ActivationTest(LoggedInTest):
-
-    def test_activate_registered_user(self):
-        self.fail("Implement me!")
-        # Chrissi will einen neu registrierten User hinzufügen
-
-        # Er klickt dazu auf $FELD
-
-        # Er erhält eine Übersicht von neuen Benutzern
-
-        # Er weist den neuen User einer existierenden Person 
-        # aus der Getraenkekasse hinzu
-
-        # ... und klickt auf speichern
-
-class SortimentTest(LoggedInTest):
+class SortimentTest(LoggedInStaffTest):
 
     def test_enter_new_beverage(self):
         self.fail("Implement me!")
@@ -29,7 +14,7 @@ class SortimentTest(LoggedInTest):
 
         # Zufrieden stellt er fest, das Weizen nun in der Highscore auftaucht
 
-class KassenTest(LoggedInTest):
+class KassenTest(LoggedInStaffTest):
 
     def test_updating_getraenkekasse(self):
         self.fail("Implement me!")
