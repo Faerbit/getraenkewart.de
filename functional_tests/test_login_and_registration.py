@@ -75,7 +75,10 @@ class LoginAndLogoutTests(FunctionalTest):
 
     def test_registered_user_can_login_and_logout(self):
         # John ist ein registrierter Nutzer
-        User.objects.create_user("john", "john@provider.com", "secret12")
+        if not against_staging:
+            User.objects.create_user("john", "john@provider.com", "secret12")
+        else:
+            self.fail("Implement against staging!")
         # John möchte sich einloggen
         self.browser.get(self.server_url)
         self.browser.find_element_by_id("login-dropdown-button").click()
