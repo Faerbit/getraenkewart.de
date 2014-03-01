@@ -28,14 +28,20 @@ class FunctionalTest(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_table(self, table_id, row_text):
+            table = self.browser.find_element_by_id(table_id)
+            rows = table.find_elements_by_tag_name('tr')
+            self.assertIn(row_text, [row.text for row in rows])
 
-class LoggedInTest(FunctionalTest):
+class LoggedInStaffTest(FunctionalTest):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         if not cls.against_staging:
-            User.objects.create_user("chris", "chris@provider.com", "secret12")
+            user = User.objects.create_user("chris", "chris@provider.com", "secret12")
+            user.is_staff = True
+            user.save()
         else:
             self.fail("Implement against staging!")
 
