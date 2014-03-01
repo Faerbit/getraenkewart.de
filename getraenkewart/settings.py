@@ -22,7 +22,7 @@ TEMPLATE_DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(BASE_DIR, "../database/database.db"),
+        'NAME': os.path.join(BASE_DIR, "../../database/database.db"),
     }
 }
 
@@ -112,7 +112,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django_nvd3',
+    #'django_nvd3',
     'getraenke',
     "getraenkewart",
 )
