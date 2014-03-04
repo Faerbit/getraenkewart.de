@@ -1,7 +1,7 @@
 {% extends "getraenkewart/base.html" %}
 
 {% block content %}
-<h2 style="text-align:center;" >Neuen Benutzer registrieren</h2>
+<h2>Neuen Benutzer registrieren</h2>
 <form action="{% url 'register' %}" method="post" accept-charset="utf-8" role="form">
 {% csrf_token %}
     <div class="container">
