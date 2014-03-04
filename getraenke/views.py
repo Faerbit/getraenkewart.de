@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from getraenke.models import Person, Jahr, Monat
 from datetime import date
 from django.contrib import messages
-#import pdb
+from django.contrib.auth.models import User
+
+from getraenke.models import Person, Jahr, Monat
 
 def generate_bier_chart (year):
 	#xdata = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
@@ -31,6 +32,18 @@ def generate_bier_chart (year):
 			'charttdata': chartdata
 			}
 	return data
+
+def people(request):
+    if request.method == "POST":
+        pass
+    new_registrations = User.objects.filter(is_active__exact=False)
+    unlinked_persons = Person.objects.filter(user__exact=-1)
+    linked_persons = Person.objects.exclude(user__exact=-1)
+    return render (request, "getraenke/people.html", {
+            "new_registrations": new_registrations,
+            "unlinked_persons": unlinked_persons,
+            "linked_persons": linked_persons,
+        })
 
 def highscore(request, year=None):
     if not request.user.is_authenticated():

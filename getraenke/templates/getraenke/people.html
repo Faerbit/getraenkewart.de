@@ -1,0 +1,51 @@
+{% extends "getraenkewart/base.html" %}
+
+{% block content %}
+    <form class="form-horizontal">
+        {% csrf_token %}
+        {% if new_registrations %}
+            <h2>Neue Registrierungen</h2>
+            <div class="container">
+                {% for user in new_registrations %}
+                    <div class="form-group">
+                        <div class=col-xs-offset-2"></div>
+                        <label class="control-label col-xs-4" for="{{ user.username }}-select">{{ user.first_name }} {{ user.last_name }}</label>
+                        <div class="col-xs-4">
+                            <select class="form-control" id="{{ user.username }}-select">
+                                <option>Keine Änderung</option>
+                                <option>Neue Person anlegen</option>
+                                <option>Registrierung löschen</option>
+                                {% for unlinked in unlinked_persons %}
+                                    <option>{{ unlinked.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if linked_persons %}
+            <h2>Registrierte Personen</h2>
+            <div class="container">
+                <table class="table table-hover table-bordered">
+                    <th>Person</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th style="width:25%;">Aktion</th>
+                        {% for person in linked_persons %}
+                            <tr>
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.user.first_name }}</td>
+                                <td>{{ person.user.last_name }}</td>
+                                <td>
+                                    <select class="form-control" id="{{ person.name }}-select">
+                                        <option>Keine Änderung</option>
+                                        <option>Benutzer löschen</option>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    </form>
+{% endblock %}

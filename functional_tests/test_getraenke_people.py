@@ -23,6 +23,7 @@ class ActivationTest(LoggedInStaffTest):
         # ... und dann auf "Personen"
         self.browser.find_element_by_id("people-nav").click()
         # Er erhält eine Übersicht von allen Benutzern
+        #TODO Adapt current rendering of stuff
         self.check_for_row_in_table("people-table", "John Shmidt")
         # Er markiert den neuen Benutzer als neuer Person
         select = self.browser.find_element_by_id("john-select")
@@ -34,3 +35,5 @@ class ActivationTest(LoggedInStaffTest):
         for row in rows:
             if "John Shmidt" in row.text:
                 self.assertIn("aktiv", row.text)
+
+    #TODO Write more functional tests
