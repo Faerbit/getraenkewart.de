@@ -19,7 +19,7 @@ class ActivationTest(LoggedInStaffTest):
         # Chris will einen neu registrierten User hinzufügen
         self.browser.get(self.server_url)
         # Er klickt dazu auf "Verwalten"
-        self.browser.find_element_by_id("manage-nav").click()
+        self.browser.find_element_by_id("manage-dropdown").click()
         # ... und dann auf "Personen"
         self.browser.find_element_by_id("people-nav").click()
         # Er erhält eine Übersicht von allen Benutzern

@@ -25,10 +25,20 @@
             </div>
             <div class="navbar-collapse collapse">
 			    <ul class="nav navbar-nav">
-                    <li class="{% active request '^/$' %}"><a href="{% url 'index' %}">Start</a></li>
-                    <li class="{% active request '/getraenke/$' %}"><a href="{% url 'highscore'%}">Getränke</a></li>
+                    <li class="{% active request '^/$' %}"><a id="index-nav" href="{% url 'index' %}">Start</a></li>
+                    <li class="{% active request '/getraenke/$' %}"><a id="getraenke-nav" href="{% url 'highscore'%}">Getränke</a></li>
                     {% if user.is_staff %}
-                    <li class="{% active request '/getraenke/manage/$' %}"> <a href="{% url 'manage' %}">Verwalten</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle {% active request '/getraenke/manage/$' %}" id="manage-dropdown" href="#" data-toggle="dropdown">
+                                Verwalten<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <div class="container">
+                                    <li id="people-nav"><a class="navbar-link" href="{% url 'people' %}">Personen</a></li>
+                                    <li id="manage-nav"><a class="navbar-link" href="{% url 'manage' %}">Kasse</a></li>
+                                </div>
+                            </ul>
+                        </li>
                     {% endif %}
 			    </ul>
                 {% if user.is_authenticated %}
